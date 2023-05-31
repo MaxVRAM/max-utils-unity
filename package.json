@@ -1,6 +1,6 @@
 ﻿{
   "name": "com.maxvram.max-utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "displayName": "MaxUtils",
   "description": "Collection of general-purpose utility functions, extensions, editor helpers, and custom types for Unity.",
   "unity": "2021.3",
