@@ -1,0 +1,18 @@
+{
+    "name": "MaxUtils.Editor",
+    "rootNamespace": "MaxUtils.Editor",
+    "references": [
+        "GUID:e017979d01a3add45bdd7e0cc1d86c97"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

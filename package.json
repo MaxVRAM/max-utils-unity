@@ -1,0 +1,23 @@
+﻿{
+  "name": "com.maxvram.max-utils",
+  "version": "1.0.0",
+  "displayName": "MaxUtils",
+  "description": "Collection of general-purpose utility functions, extensions, editor helpers, and custom types for Unity.",
+  "unity": "2021.3",
+  "unityRelease": "21f1",
+  "documentationUrl": "https://github.com/MaxVRAM/max-utils-unity",
+  "changelogUrl": "https://github.com/MaxVRAM/max-utils-unity",
+  "licensesUrl": "https://github.com/MaxVRAM/max-utils-unity",
+  "dependencies": {
+  },
+  "keywords": [
+    "utils",
+    "maxvram",
+    "fancy"
+  ],
+  "author": {
+    "name": "Chris Vik",
+    "email": "maxvram@chrisvik.com",
+    "url": "https://github.com/MaxVRAM"
+  }
+}
