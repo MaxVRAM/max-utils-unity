@@ -4,6 +4,12 @@ namespace MaxVram.Modules
 {
     public static class MaxAudio
     {
+        /// <summary>
+        /// Exponentially processes a normalised linear input value to replicate the human perception of loudness.
+        /// Using this to set the volume of two identical AudioSources, one fading up and the other down, will perform
+        /// a cross-fade with a perceived equal power curve.
+        /// </summary>
+        /// <returns></returns>
         public static float LinearToLoudness(float linear)
         {
             return linear switch {
