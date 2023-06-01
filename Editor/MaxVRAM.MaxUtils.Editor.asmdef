@@ -1,6 +1,6 @@
 {
-    "name": "MaxUtils.Editor",
-    "rootNamespace": "MaxUtils.Editor",
+    "name": "MaxVRAM.MaxUtils.Editor",
+    "rootNamespace": "MaxVram",
     "references": [
         "GUID:e017979d01a3add45bdd7e0cc1d86c97"
     ],

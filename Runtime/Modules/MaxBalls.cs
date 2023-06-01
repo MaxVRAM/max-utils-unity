@@ -2,7 +2,7 @@
 
 namespace MaxVram.Modules
 {
-    public static class MaxSpherical
+    public static class MaxBalls
     {
         public static void SphericalToCartesian(float radius, float polar, float elevation, out Vector3 cartesianCoords)
         {

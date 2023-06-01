@@ -1,5 +1,5 @@
 {
-    "name": "MaxUtils",
+    "name": "MaxVRAM.MaxUtils",
     "rootNamespace": "MaxVram",
     "references": [],
     "includePlatforms": [],
