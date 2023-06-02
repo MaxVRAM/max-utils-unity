@@ -2,12 +2,10 @@
 
 namespace MaxVram.Audio
 {
-    public enum Waveforms { Sine, Square, Sawtooth, Triangle, Noise }
-    
     public static class MaxAudio
     {
-        public static int MinFreq = 20;
-        public static int MaxFreq = 20480;
+        public const int MinFrequency = 20;
+        public const int MaxFrequency = 20480;
         
         /// <summary>
         /// Exponentially processes a normalised linear input value to replicate the human perception of loudness.
@@ -22,7 +20,7 @@ namespace MaxVram.Audio
                 _         => (Mathf.Log10(linear + 0.1f) + 1f) * 0.9602f
             };
         }
-        
+
         /// <summary>
         /// Converts a normalised (0-1) linear value to a logarithmic value in Hertz (20 to 20,480 Hz).
         /// </summary>
