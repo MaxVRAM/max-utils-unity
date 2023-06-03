@@ -9,18 +9,17 @@ namespace MaxVram.Audio
     [Serializable]
     public struct FrequencyShifter
     {
-        [Range(20, 20480)] public double BaseFrequency;
-        public PitchShifter PitchOffset;
+        [Range(20, 20480)] public float BaseFrequency;
+        public PitchMultiplier PitchOffset;
 
-        public FrequencyShifter(double baseFrequency)
+        public FrequencyShifter(float baseFrequency)
         {
             BaseFrequency = baseFrequency;
-            PitchOffset = new PitchShifter(0);
+            PitchOffset = new PitchMultiplier();
         }
 
-        public double Value => PitchOffset.ApplyPitch(BaseFrequency);
-        public static implicit operator FrequencyShifter(double baseFrequency) => new(baseFrequency);
-        public static implicit operator double(FrequencyShifter frequencyShifter) => frequencyShifter.Value;
-        public static implicit operator float(FrequencyShifter frequencyShifter) => (float)frequencyShifter.Value;
+        public float Value => PitchOffset.ApplyPitch(BaseFrequency);
+        public static implicit operator FrequencyShifter(float baseFrequency) => new(baseFrequency);
+        public static implicit operator float(FrequencyShifter frequencyShifter) => frequencyShifter.Value;
     }
 }

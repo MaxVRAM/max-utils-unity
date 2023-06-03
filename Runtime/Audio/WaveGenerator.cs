@@ -10,15 +10,15 @@ namespace MaxVram.Audio
     /// </summary>
     public static class WaveGenerator
     {
-        public static float Sine(float index) => Mathf.Sin(index);
+        public static float Sine(double index) => Mathf.Sin((float)index);
 
-        public static float Square(float index) => Mathf.Sign(Mathf.Sin(index));
+        public static float Square(double index) => Mathf.Sign(Mathf.Sin((float)index));
 
-        public static float Sawtooth(float index) => 2f / Mathf.PI * (index - Mathf.PI) / 2f;
+        public static float Sawtooth(double index) => 2f / Mathf.PI * ((float)index - Mathf.PI) / 2f;
 
-        public static float Triangle(float index) => 2f / Mathf.PI * Mathf.Asin(Mathf.Sin(index));
+        public static float Triangle(double index) => 2f / Mathf.PI * Mathf.Asin(Mathf.Sin((float)index));
         
-        public static float GetSample(this Waveforms waveform, float index) =>
+        public static float GetSample(this Waveforms waveform, double index) =>
             waveform switch {
                 Waveforms.Sine     => Sine(index),
                 Waveforms.Square   => Square(index),

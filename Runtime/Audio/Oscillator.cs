@@ -1,14 +1,19 @@
 ﻿using System;
+using UnityEngine;
 
 namespace MaxVram.Audio
 {
+    /// <summary>
+    /// A basic oscillator to generate a waveform used to fill an AudioSource output buffer.
+    /// </summary>
     [Serializable]
     public class Oscillator : SoundSource
     {
-        public FrequencyShifter Frequency;
         public Waveforms Waveform;
+        public FrequencyShifter Frequency;
+        private float _currentFrequency;
 
-        public Oscillator(Waveforms waveform, double frequency)
+        public Oscillator(Waveforms waveform, float frequency)
         {
             Frequency = new FrequencyShifter(frequency);
             Waveform = waveform;
@@ -19,42 +24,51 @@ namespace MaxVram.Audio
             Frequency = new FrequencyShifter(440);
             Waveform = Waveforms.Sine;
         }
-        
-        public void UpdateFrequency()
+
+        public override void Initialise(AudioConfiguration config, double sourceSampleCount = 0)
         {
-            SetFrequency(Frequency);
+            base.Initialise(config, 2 * Mathf.PI);
+            _currentFrequency = Frequency;
         }
-        
-        public new float GetNextSample()
+
+        /// <summary>
+        /// Updates the current frequency value using a lerp to smooth the transition.
+        /// </summary>
+        /// <param name="deltaTime">Use delta time to define the smoothing rate. If providing an arbitrary value, recommended range is 0.01 and 0.1.</param>
+        public void UpdateFrequency(float deltaTime)
         {
+            if (!IsInitialised)
+                return;
+            
+            _currentFrequency = Mathf.Lerp(_currentFrequency, Frequency, deltaTime * 20);
+            SetIncrement();
+        }
+
+        public override float GetNextSample()
+        {
+            if (!IsInitialised)
+                return 0;
+
             IncrementSample();
             return Waveform.GetSample(CurrentIndex);
         }
-        
-        // public void SetIncrement()
-        // {
-        //     if (OutputSampleRate == 0)
-        //         return;
-        //
-        //     SetSourceSampleRate();
-        //     double frequency = Mathf.Lerp((float)_currentFrequency, (float)Frequency, 0.2f);
-        //     _currentFrequency = frequency;
-        //     _increment = _currentFrequency * 2f * Mathf.PI / _sampleRate;
-        // }
 
+        protected override void SetIncrement()
+        {
+            if (!IsInitialised)
+                return;
 
-        // /// <summary>
-        // /// Returns the current sample of the oscillator.
-        // /// Desmos calculator graph for visual demonstration: https://www.desmos.com/calculator/m9v9lfwyyb
-        // /// </summary>
-        // public float Wave =>
-        //     Waveform switch {
-        //         Waveforms.Sine     => Mathf.Sin((float)_phase),
-        //         Waveforms.Square   => Mathf.Sign(Mathf.Sin((float)_phase)),
-        //         Waveforms.Sawtooth => 2f / Mathf.PI * ((float)_phase - Mathf.PI) / 2f,
-        //         Waveforms.Triangle => 2f / Mathf.PI * Mathf.Asin(Mathf.Sin((float)_phase)),
-        //         Waveforms.Noise    => 2f * Random.value - 1f,
-        //         _                  => 0f
-        //     };
+            Increment = _currentFrequency * PlaybackRatio;
+        }
+
+        protected override void IncrementSample()
+        {
+            if (!IsInitialised)
+                return;
+
+            CurrentIndex += Increment;
+            if (CurrentIndex >= SourceSampleCount)
+                CurrentIndex %= SourceSampleCount;
+        }
     }
 }

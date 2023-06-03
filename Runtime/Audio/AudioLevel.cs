@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace MaxVram.Audio
 {
+    /// <summary>
+    /// AudioLevel is a wrapper for a float value to help manage the gain of an audio signal.
+    /// </summary>
     [Serializable]
     public class AudioLevel
     {
@@ -28,12 +31,21 @@ namespace MaxVram.Audio
 
         public static implicit operator float(AudioLevel level) => level._gain;
 
-        public void SmoothGain(float deltaTime)
+        /// <summary>
+        /// Updates the current gain value using a lerp to smooth the transition.
+        /// </summary>
+        /// <param name="deltaTime">Use delta time to define the smoothing rate. If providing an arbitrary value, recommended range is 0.01 and 0.1.</param>
+        public void UpdateGain(float deltaTime)
         {
-            _currentGain = Mathf.Lerp(_currentGain, _gain, deltaTime * 0.01f);
+            _currentGain = Mathf.Lerp(_currentGain, _gain, deltaTime * 20);
             Loudness = _currentGain;
         }
 
+        /// <summary>
+        /// Sets the gain of the AudioLevel object, clamped between 0 and 1.
+        /// If <c>requiresSmoothing</c> is true, gain will only be updated by manually calling the <c>Smooth</c> method.
+        /// </summary>
+        /// <param name="gain"></param>
         public void SetGain(float gain)
         {
             _gain = Mathf.Clamp01(gain);

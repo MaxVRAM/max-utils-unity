@@ -6,7 +6,7 @@ namespace MaxVram.Audio
     {
         public const int MinFrequency = 20;
         public const int MaxFrequency = 20480;
-        
+
         /// <summary>
         /// Exponentially processes a normalised linear input value to replicate the human perception of loudness.
         /// Using this to set the volume of two identical AudioSources, one fading up and the other down, will perform
@@ -24,13 +24,13 @@ namespace MaxVram.Audio
         /// <summary>
         /// Converts a normalised (0-1) linear value to a logarithmic value in Hertz (20 to 20,480 Hz).
         /// </summary>
-        public static float LinearToHertz (float value) => 20 * Mathf.Pow(2, 10 * value);
-        
+        public static float LinearToHertz(float value) => 20 * Mathf.Pow(2, 10 * value);
+
         /// <summary>
         /// Converts a logarithmic value in Hertz (20 to 20,480 Hz) to a normalised (0-1) linear value.
         /// </summary>
-        public static float HertzToLinear (double value) => Mathf.Log((float) value / 20, 2) / 10;
-        
+        public static float HertzToLinear(double value) => Mathf.Log((float)value / 20, 2) / 10;
+
         public static float BufferGetSample(float[] dspBuffer, int writeIndex, float readIndex)
         {
             float localIndex = writeIndex - readIndex;
