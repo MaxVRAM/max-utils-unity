@@ -1,8 +1,5 @@
-﻿using System;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
-
-using MaxVram.Extensions;
 
 namespace MaxVram.Audio
 {
@@ -22,33 +19,11 @@ namespace MaxVram.Audio
             SerializedProperty freq = property.FindPropertyRelative("BaseFrequency");
             SerializedProperty pitch = property.FindPropertyRelative("PitchOffset");
 
-            var freqLabel = new GUIContent("Hz", "Frequency");
             var singleLine = new Rect(position) { height = lineHeight };
-            label = EditorGUI.BeginProperty(singleLine, label, property);
-            position = EditorGUI.PrefixLabel(singleLine, label);
-            EditorGUI.indentLevel = 0;
+            var secondLine = new Rect(singleLine) { y = position.y + lineHeight + 2 };
 
-            Rect sliderRect = position.GetRect( 6, 0, 4);
-            Rect fieldRect = position.GetRect( 6, 4, 1);
-            Rect freqLabelRect = position.GetRect( 6, 5, 1);
-
-            EditorGUI.BeginChangeCheck();
-            float sliderHertz = GUI.HorizontalSlider(sliderRect, MaxAudio.HertzToLinear(freq.doubleValue), 0, 1);
-
-            if (EditorGUI.EndChangeCheck())
-                freq.doubleValue = Mathf.Clamp(MaxAudio.LinearToHertz(sliderHertz), 20f, 20480f);
-
-            EditorGUI.BeginChangeCheck();
-            double fieldHertz = EditorGUI.DoubleField(fieldRect, freq.doubleValue);
-            EditorGUI.LabelField(freqLabelRect, freqLabel);
-
-            EditorGUI.EndProperty();
-
-            if (EditorGUI.EndChangeCheck())
-                freq.doubleValue = Mathf.Clamp((float)fieldHertz, 20, 20480);
-
-            var secondLine = new Rect(position) { y = position.y + lineHeight + 2 };
-            EditorGUI.PropertyField(secondLine, pitch, GUIContent.none);
+            EditorGUI.PropertyField(singleLine, freq);
+            EditorGUI.PropertyField(secondLine, pitch);
             
             EditorGUI.indentLevel = indent;
         }

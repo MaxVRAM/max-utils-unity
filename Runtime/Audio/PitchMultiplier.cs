@@ -12,17 +12,18 @@ namespace MaxVram.Audio
         [SerializeField] [Range(-6, 6)] private int _octave;
         [SerializeField] [Range(-12, 12)] private int _semitone;
         [SerializeField] [Range(-100, 100)] private float _cent;
-        private bool _changed;
+        [SerializeField] protected bool Changed;
+        
         private float _pitch;
         public float Pitch
         {
             get
             {
-                if (!_changed && _pitch != 0)
+                if (!Changed && _pitch != 0)
                     return _pitch;
 
                 _pitch = Mathf.Pow(2, _octave + _semitone / 12f + _cent / 1200f);
-                _changed = false;
+                Changed = false;
                 return _pitch;
             }
             private set => _pitch = value;
@@ -34,7 +35,7 @@ namespace MaxVram.Audio
             set
             {
                 _octave = Math.Clamp(value, -6, 6);
-                _changed = true;
+                Changed = true;
             }
         }
         public int Semitone
@@ -43,7 +44,7 @@ namespace MaxVram.Audio
             set
             {
                 _semitone = Math.Clamp(value, -12, 12);
-                _changed = true;
+                Changed = true;
             }
         }
         public float Cent
@@ -52,7 +53,7 @@ namespace MaxVram.Audio
             set
             {
                 _cent = Mathf.Clamp(value, -100, 100);
-                _changed = true;
+                Changed = true;
             }
         }
 
@@ -62,7 +63,7 @@ namespace MaxVram.Audio
             _semitone = semitone;
             _cent = cent;
             _pitch = 0;
-            _changed = true;
+            Changed = true;
         }
 
         public PitchMultiplier()
@@ -71,7 +72,7 @@ namespace MaxVram.Audio
             _semitone = 0;
             _cent = 0;
             _pitch = 0;
-            _changed = true;
+            Changed = true;
         }
 
         /// <summary>

@@ -29,6 +29,8 @@ namespace MaxVram.Audio
             
             Rect[] rects = position.Divide(6);
 
+            EditorGUI.BeginChangeCheck();
+            
             octField.intValue = Math.Clamp(EditorGUI.IntField(rects[0], octField.intValue), -10, 10);
             EditorGUI.LabelField(rects[1], octLabel);
 
@@ -37,6 +39,12 @@ namespace MaxVram.Audio
 
             centField.floatValue = Mathf.Clamp(EditorGUI.FloatField(rects[4], centField.floatValue), -100, 100);
             EditorGUI.LabelField(rects[5], centLabel);
+            
+            if (EditorGUI.EndChangeCheck())
+            {
+                SerializedProperty changed = property.FindPropertyRelative("Changed");
+                changed.boolValue = true;
+            }
 
             EditorGUI.indentLevel = indent;
         }

@@ -18,7 +18,7 @@ namespace MaxVram.Audio
 
         public static float Triangle(double index) => 2f / Mathf.PI * Mathf.Asin(Mathf.Sin((float)index));
         
-        public static float GetSample(this Waveforms waveform, double index) =>
+        public static float SampleWaveform(this Waveforms waveform, double index) =>
             waveform switch {
                 Waveforms.Sine     => Sine(index),
                 Waveforms.Square   => Square(index),

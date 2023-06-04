@@ -10,25 +10,23 @@ namespace MaxVram.Audio
     public class Oscillator : SoundSource
     {
         public Waveforms Waveform;
-        public FrequencyShifter Frequency;
-        private float _currentFrequency;
+        public FrequencyShifter FrequencyShift;
 
         public Oscillator(Waveforms waveform, float frequency)
         {
-            Frequency = new FrequencyShifter(frequency);
+            FrequencyShift = new FrequencyShifter(frequency);
             Waveform = waveform;
         }
 
         public Oscillator()
         {
-            Frequency = new FrequencyShifter(440);
+            FrequencyShift = new FrequencyShifter(440);
             Waveform = Waveforms.Sine;
         }
 
         public override void Initialise(AudioConfiguration config, double sourceSampleCount = 0)
         {
             base.Initialise(config, 2 * Mathf.PI);
-            _currentFrequency = Frequency;
         }
 
         /// <summary>
@@ -40,7 +38,7 @@ namespace MaxVram.Audio
             if (!IsInitialised)
                 return;
             
-            _currentFrequency = Mathf.Lerp(_currentFrequency, Frequency, deltaTime * 20);
+            FrequencyShift.BaseFrequency.Smooth(deltaTime);
             SetIncrement();
         }
 
@@ -49,8 +47,8 @@ namespace MaxVram.Audio
             if (!IsInitialised)
                 return 0;
 
-            IncrementSample();
-            return Waveform.GetSample(CurrentIndex);
+            IncrementIndex();
+            return Waveform.SampleWaveform(CurrentIndex);
         }
 
         protected override void SetIncrement()
@@ -58,10 +56,10 @@ namespace MaxVram.Audio
             if (!IsInitialised)
                 return;
 
-            Increment = _currentFrequency * PlaybackRatio;
+            Increment = FrequencyShift.Value * PlaybackRatio;
         }
 
-        protected override void IncrementSample()
+        protected override void IncrementIndex()
         {
             if (!IsInitialised)
                 return;

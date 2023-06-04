@@ -423,15 +423,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Level:
-    _gain: 0.124
+    TargetValue: 0.5
+    CurrentValue: 0.5
+    MinValue: 0
+    MaxValue: 1
+    RequiresSmoothing: 0
+    Changed: 1
+    ValueName: Level
+    ValueUnit: Gain
   Voice:
-    Frequency:
-      BaseFrequency: 440
-      PitchOffset:
-        Octave: 0
-        Semitone: 0
-        Cent: 0
     Waveform: 0
+    FrequencyShift:
+      BaseFrequency:
+        TargetValue: 440
+        CurrentValue: 440
+        MinValue: 20
+        MaxValue: 20480
+        RequiresSmoothing: 0
+        Changed: 1
+        ValueName: Frequency
+        ValueUnit: Hz
+      PitchOffset:
+        _octave: 0
+        _semitone: 0
+        _cent: 0
+        Changed: 1
 --- !u!1 &1453410186
 GameObject:
   m_ObjectHideFlags: 0
